@@ -1,58 +1,8 @@
 [
   {
-    "source": "bin/containerd$",
-    "destination": "/wfs/containerd/bin",
-    "owner": "0:0",
-    "permissions": "755",
-    "strip": false
-  },
-  {
-    "source": "bin/ctr$",
-    "destination": "/wfs/containerd/bin",
-    "owner": "0:0",
-    "permissions": "755",
-    "strip": false
-  },
-  {
-    "source": "bin/containerd-shim-runc-v2$",
-    "destination": "/wfs/containerd/bin",
-    "owner": "0:0",
-    "permissions": "755",
-    "strip": false
-  },
-  {
-    "source": "etc/systemd/system/.*\\.service$",
-    "destination": "/etc/systemd/system",
-    "owner": "0:0",
-    "permissions": "644",
-    "strip": false
-  },
-  {
-    "source": "usr/local/bin/greencloud-register$",
-    "destination": "/usr/local/bin",
-    "owner": "0:0",
-    "permissions": "755",
-    "strip": false
-  },
-  {
-    "source": "greencloud-config-sync\\.sh$",
-    "destination": "/services/greencloud",
-    "owner": "0:0",
-    "permissions": "755",
-    "strip": false
-  },
-  {
-    "source": "usr/local/bin/gcnode$",
-    "destination": "/services/greencloud/usr/local/bin",
-    "owner": "0:0",
-    "permissions": "755",
-    "strip": true
-  },
-  {
-    "source": "usr/local/bin/gccli$",
-    "destination": "/services/greencloud/usr/local/bin",
-    "owner": "0:0",
-    "permissions": "755",
-    "strip": true
+    "source": ".*",
+    "excludes": [
+      ""
+    ]
   }
 ]
