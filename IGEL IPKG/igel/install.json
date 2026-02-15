@@ -1,12 +1,51 @@
 [
   {
-    "source": ".*",
-    "excludes": [
-      ""
-    ],
-    "destination": "",
-    "owner": "",
-    "permissions": "",
-    "strip": true
+    "source": "input/all/etc/.*",
+    "destination": "/etc",
+    "owner": "0:0",
+    "permissions": "644",
+    "strip": false
+  },
+  {
+    "source": "input/all/usr/.*",
+    "destination": "/usr",
+    "owner": "0:0",
+    "permissions": "755",
+    "strip": false
+  },
+  {
+    "source": "input/all/install-containerd.sh",
+    "destination": "/services/greencloud",
+    "owner": "0:0",
+    "permissions": "755",
+    "strip": false
+  },
+  {
+    "source": "input/all/greencloud-config-sync.sh",
+    "destination": "/services/greencloud",
+    "owner": "0:0",
+    "permissions": "755",
+    "strip": false
+  },
+  {
+    "source": "tmp/containerd.tgz",
+    "destination": "/services/greencloud/tmp",
+    "owner": "0:0",
+    "permissions": "644",
+    "strip": false
+  },
+  {
+    "source": "usr/local/bin/gcnode",
+    "destination": "/services/greencloud/usr/local/bin",
+    "owner": "0:0",
+    "permissions": "755",
+    "strip": false
+  },
+  {
+    "source": "usr/local/bin/gccli",
+    "destination": "/services/greencloud/usr/local/bin",
+    "owner": "0:0",
+    "permissions": "755",
+    "strip": false
   }
 ]
