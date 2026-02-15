@@ -1,0 +1,22 @@
+{
+  "title": {
+    "en": "GreenCloud",
+    "de": "GreenCloud"
+  },
+  "settings.label": {
+    "en": "Settings",
+    "de": "Einstellungen"
+  },
+  "enabled.label": {
+    "en": "Enable GreenCloud Node",
+    "de": "GreenCloud Node aktivieren"
+  },
+  "api_key.label": {
+    "en": "API Key",
+    "de": "API-Schlüssel"
+  },
+  "node_name.label": {
+    "en": "Node Name",
+    "de": "Knotenname"
+  }
+}

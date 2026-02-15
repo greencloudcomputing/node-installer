@@ -1,0 +1,40 @@
+GreenCloud Node - Run containerized workloads on your IGEL device
+
+# GreenCloud Node
+
+GreenCloud Node allows you to run containerized workloads on your IGEL OS device using containerd. This app includes:
+
+- **containerd**: Industry-standard container runtime
+- **GreenCloud node software**: Connect to GreenCloud infrastructure  
+- **Persistent storage**: Data survives reboots
+- **Setup UI integration**: Configure via IGEL Setup
+
+## Configuration
+
+1. Go to **Applications > GreenCloud > Settings** in IGEL Setup
+2. Enter your GreenCloud API key
+3. Provide a name for this node
+4. Enable the GreenCloud service
+5. Apply changes and reboot
+6. Run registration: Open terminal as root and execute `greencloud-register`
+
+## Requirements
+
+- IGEL OS 12.2.2 or higher
+- Network connectivity to GreenCloud services
+- Valid GreenCloud account and API key
+- Sufficient storage space for container images
+
+## Troubleshooting
+
+Check service status:
+```
+systemctl status containerd
+systemctl status gcnode
+journalctl -u gcnode -f
+```
+
+Manual registration:
+```
+greencloud-register
+```

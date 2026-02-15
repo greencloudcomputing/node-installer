@@ -1,0 +1,16 @@
+[Unit]
+Description=GreenCloud Node Service
+After=network.target containerd.service
+Requires=containerd.service
+
+[Service]
+ExecStart=/services/greencloud/usr/local/bin/gcnode
+Restart=always
+User=root
+WorkingDirectory=/var/lib/greencloud
+Environment="GC_HOSTNET=true"
+Environment="GC_API_KEY_FILE=/services_rw/greencloud/api_key"
+Environment="GC_NODE_NAME_FILE=/services_rw/greencloud/node_name"
+
+[Install]
+WantedBy=multi-user.target

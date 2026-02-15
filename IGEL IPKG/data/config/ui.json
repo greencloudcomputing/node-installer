@@ -1,0 +1,36 @@
+{
+  "root": {
+    "id": "root",
+    "childrenIds": ["base"]
+  },
+  "base": {
+    "id": "base",
+    "parentId": "root",
+    "nlsResourceId": "title",
+    "title": "GreenCloud",
+    "childrenIds": ["settings"]
+  },
+  "settings": {
+    "id": "settings",
+    "parentId": "base",
+    "nlsResourceId": "settings.label",
+    "title": "Settings",
+    "elements": {
+      "0": {
+        "type": "checkBox",
+        "paramId": "app.greencloud.enabled",
+        "nlsResourceId": "enabled.label"
+      },
+      "1": {
+        "type": "textBox",
+        "paramId": "app.greencloud.api_key",
+        "nlsResourceId": "api_key.label"
+      },
+      "2": {
+        "type": "textBox",
+        "paramId": "app.greencloud.node_name",
+        "nlsResourceId": "node_name.label"
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+#!/bin/bash
+set -euo pipefail
+
+CONFIG_DIR="/services_rw/greencloud"
+API_KEY_FILE="${CONFIG_DIR}/api_key"
+NODE_NAME_FILE="${CONFIG_DIR}/node_name"
+
+if [[ ! -f "${API_KEY_FILE}" ]] || [[ ! -f "${NODE_NAME_FILE}" ]]; then
+  echo "Error: API key or node name not configured"
+  echo "Please configure via IGEL Setup: Applications > GreenCloud > Settings"
+  exit 1
+fi
+
+API_KEY=$(cat "${API_KEY_FILE}")
+NODE_NAME=$(cat "${NODE_NAME_FILE}")
+
+echo "Logging in to GreenCloud..."
+/services/greencloud/usr/local/bin/gccli login -k "${API_KEY}"
+
+echo "Waiting for node to start..."
+sleep 5
+
+NODE_ID=""
+attempts=0
+max_attempts=10
+
+while [ -z "$NODE_ID" ] && [ "$attempts" -lt "$max_attempts" ]; do
+  NODE_ID="$(journalctl -u gcnode --no-pager -n 200 | sed -n "s/.*ID → \([a-f0-9-]\+\).*/\1/p" | tail -1)"
+  if [ -z "$NODE_ID" ]; then
+    echo "Waiting for Node ID... (${attempts}/${max_attempts})"
+    sleep 2
+    attempts=$((attempts+1))
+  fi
+done
+
+if [ -z "$NODE_ID" ]; then
+  echo "Error: Could not retrieve Node ID"
+  echo "Check: journalctl -u gcnode"
+  exit 1
+fi
+
+echo "Node ID: ${NODE_ID}"
+echo "Registering node..."
+
+/services/greencloud/usr/local/bin/gccli node add --external --id "${NODE_ID}" --description "${NODE_NAME}"
+
+echo "Node registered successfully!"

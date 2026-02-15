@@ -1,0 +1,25 @@
+[
+  {
+    "path": "/wfs/containerd",
+    "owner": "0:0",
+    "permissions": "755",
+    "persistent": true
+  },
+  {
+    "path": "/wfs/bin",
+    "owner": "0:0",
+    "permissions": "755",
+    "persistent": true
+  },
+  {
+    "path": "/var/lib/greencloud",
+    "owner": "0:0",
+    "permissions": "755",
+    "persistent": true
+  },
+  {
+    "path": "/etc/containerd",
+    "owner": "0:0",
+    "permissions": "755"
+  }
+]

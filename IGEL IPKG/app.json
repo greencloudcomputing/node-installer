@@ -1,0 +1,31 @@
+{
+  "name": "greencloud",
+  "version": "1.0.0+0.1.rc.1",
+  "public_version": "1.0.0 BUILD 1.0 RC 1",
+  "summary": {
+    "en": "GreenCloud Node"
+  },
+  "author": "IGEL Technology Partner",
+  "vendor": "GreenCloud Computing",
+  "categories": [
+    "Virtualization",
+    "Infrastructure"
+  ],
+  "icons": {
+    "app": "greencloud_portal.svg",
+    "monochrome": "greencloud_monochrome.svg"
+  },
+  "requires": [
+    {
+      "name": "base_system",
+      "version": ">=12.2.2"
+    }
+  ],
+  "rw_partition": {
+    "size": "large",
+    "flags": [
+      "compressed",
+      "prefer_btrfs"
+    ]
+  }
+}
