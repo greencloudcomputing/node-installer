@@ -1,21 +1,19 @@
-<greencloud>
-  <api_key>
-    displayname[en_us]=<API Key>
-    type=<password>
-    runtime=<true>
-  </api_key>
-  <node_name>
-    displayname[en_us]=<Node Name>
-    type=<string>
-    runtime=<true>
-  </node_name>
-  <enabled>
-    displayname[en_us]=<Enable GreenCloud Node>
-    type=<bool>
-    value=<true>
-    runtime=<true>
-  </enabled>
-</greencloud>
+<api_key>
+  displayname[en_us]=<API Key>
+  type=<password>
+  runtime=<true>
+</api_key>
+<node_name>
+  displayname[en_us]=<Node Name>
+  type=<string>
+  runtime=<true>
+</node_name>
+<enabled>
+  displayname[en_us]=<Enable GreenCloud Node>
+  type=<bool>
+  value=<true>
+  runtime=<true>
+</enabled>
 
 <config_schema_version>
   value=<1>
