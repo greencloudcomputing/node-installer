@@ -1,44 +1,28 @@
 #!/bin/bash
 set -euo pipefail
 
+CONTAINERD_SRC="${MOUNTPOINT}/bin"
 CONTAINERD_BIN_DIR="/wfs/containerd/bin"
-CONFIG_DIR="/etc/containerd"
 
-# Create symlinks for containerd binaries
-ln -sf "${CONTAINERD_BIN_DIR}/containerd" /usr/bin/containerd
-ln -sf "${CONTAINERD_BIN_DIR}/ctr" /usr/bin/ctr
-ln -sf "${CONTAINERD_BIN_DIR}/containerd-shim-runc-v2" /usr/bin/containerd-shim-runc-v2
+# --- Copy containerd binaries to persistent storage ---
+# Builder has already extracted thirdparty archive to ${MOUNTPOINT}/bin/
+mkdir -p "${CONTAINERD_BIN_DIR}"
+cp "${CONTAINERD_SRC}/containerd" "${CONTAINERD_BIN_DIR}/containerd"
+cp "${CONTAINERD_SRC}/ctr" "${CONTAINERD_BIN_DIR}/ctr"
+cp "${CONTAINERD_SRC}/containerd-shim-runc-v2" "${CONTAINERD_BIN_DIR}/containerd-shim-runc-v2"
+chmod +x "${CONTAINERD_BIN_DIR}"/*
 
-# Generate containerd config
-mkdir -p "${CONFIG_DIR}"
-/usr/bin/containerd config default > "${CONFIG_DIR}/config.toml"
-
-# Link containerd data to persistent partition
+# --- Persistent data directories ---
 mkdir -p /wfs/containerd/data
-if [[ -d /var/lib/containerd && ! -L /var/lib/containerd ]]; then
-  rsync -aHAX /var/lib/containerd/ /wfs/containerd/data/ 2>/dev/null || true
-  rm -rf /var/lib/containerd
-fi
-ln -sf /wfs/containerd/data /var/lib/containerd
+mkdir -p /var/lib/greencloud
 
-# Configure ping_group_range for rootless containers
+# --- sysctl config ---
 echo "net.ipv4.ping_group_range = 0 2147483647" > /etc/sysctl.d/99-ping-group.conf
-if [[ -e /proc/sys/net/ipv4/ping_group_range ]]; then
-  echo "0 2147483647" > /proc/sys/net/ipv4/ping_group_range
-fi
 
-# Run config sync to create config files from IGEL parameters
-if [[ -f /services/greencloud/greencloud-config-sync.sh ]]; then
-  bash /services/greencloud/greencloud-config-sync.sh
-fi
-
-# Enable services
+# --- Enable services ---
 enable_system_service containerd.service
 enable_system_service gcnode.service
 
-# Start containerd immediately
-systemctl start containerd.service
-
-echo "GreenCloud installation complete"
+echo "GreenCloud installation complete."
 echo "Configure API key and node name in IGEL Setup: Applications > GreenCloud > Settings"
 echo "Then run: greencloud-register"
