@@ -23,7 +23,7 @@ Both scripts include **real-time logging** by default, allowing you to see exact
 Use `wget` to download the latest GreenCloud setup script:
 
 ```bash
-wget https://raw.githubusercontent.com/greencloudcomputing/node-installer/refs/heads/main/Ubuntu/setup_greencloud.sh
+wget https://raw.githubusercontent.com/greencloudcomputing/node-installer/refs/heads/main/Linux/setup_greencloud.sh
 ```
 
 ---
@@ -126,7 +126,7 @@ tail -f greencloud-setup-*.log
 ### Step 1: Download the Removal Script
 
 ```bash
-wget https://raw.githubusercontent.com/greencloudcomputing/node-installer/refs/heads/main/Ubuntu/remove_greencloud.sh
+wget https://raw.githubusercontent.com/greencloudcomputing/node-installer/refs/heads/main/Linux/remove_greencloud.sh
 ```
 
 ---

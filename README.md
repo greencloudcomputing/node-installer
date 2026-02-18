@@ -34,7 +34,7 @@ GreenCloud is a powerful cloud management platform that enables you to efficient
 
 ### Ubuntu / Debian
 ```bash
-wget https://raw.githubusercontent.com/greencloudcomputing/node-installer/refs/heads/main/Ubuntu/setup_greencloud.sh
+wget https://raw.githubusercontent.com/greencloudcomputing/node-installer/refs/heads/main/Linux/setup_greencloud.sh
 bash setup_greencloud.sh
 ```
 
@@ -46,8 +46,8 @@ See the [Proxmox Installation Guide](https://github.com/greencloudcomputing/node
 ## 📚 Documentation
 
 ### Installation Guides
-- **[Ubuntu/Debian](https://github.com/greencloudcomputing/node-installer/blob/main/Ubuntu/ubuntu_debian.md)** - Complete installation and removal guide for Debian-based systems
-- **[Proxmox](https://github.com/greencloudcomputing/node-installer/blob/main/Proxmox/Proxmox.md)** - Installation guide for Proxmox Virtual Environment
+- **[Ubuntu/Debian](https://github.com/greencloudcomputing/node-installer/blob/main/Linux/How_To.md)** - Complete installation and removal guide for Debian-based systems
+- **[Proxmox](https://github.com/greencloudcomputing/node-installer/blob/main/Proxmox/How_To.md)** - Installation guide for Proxmox Virtual Environment
 
 ### Usage Guide
 - **[GCNode Management](https://github.com/greencloudcomputing/node-installer/blob/main/How_To.md)** - Service management, logging, and troubleshooting
@@ -58,13 +58,17 @@ See the [Proxmox Installation Guide](https://github.com/greencloudcomputing/node
 
 ```
 node-installer/
-├── Ubuntu/
-│   ├── setup_greencloud.sh      # Ubuntu/Debian installation script
-│   ├── remove_greencloud.sh     # Ubuntu/Debian removal script
-│   ├── ubuntu_debian.md         # Ubuntu/Debian documentation
+├── Linux/
+│   ├── setup_greencloud.sh      # Linux installation script
+│   ├── remove_greencloud.sh     # Linux removal script
+│   ├── How_To.md                # Linux documentation
 │   └── gcnode.service           # Systemd service file
 ├── Proxmox/
-│   └── Proxmox.md               # Proxmox installation guide
+│   ├── configure_node.sh        # Proxmox first time setup inside the container
+│   ├── gcnode.service           # Systemd service file
+│   ├── setup_node.sh            # Proxmox install scrips that configures the perquisites inside the container
+│   ├── template_build.sh        # Builds the template from fresh
+│   └── How_To.md                # Proxmox installation guide
 ├── How_To.md                    # Service management guide
 └── README.md                    # This file
 ```
