@@ -58,7 +58,7 @@ See the [Proxmox Installation Guide](https://github.com/greencloudcomputing/node
 
 ```
 node-installer/
-├── How_To/
+├── Linux/
 │   ├── setup_greencloud.sh      # Linux installation script
 │   ├── remove_greencloud.sh     # Linux removal script
 │   ├── How_To.md                # Linux documentation
