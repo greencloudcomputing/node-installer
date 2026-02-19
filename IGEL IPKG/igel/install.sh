@@ -10,6 +10,7 @@ mkdir -p "${CONTAINERD_BIN_DIR}"
 cp "${CONTAINERD_SRC}/containerd" "${CONTAINERD_BIN_DIR}/containerd"
 cp "${CONTAINERD_SRC}/ctr" "${CONTAINERD_BIN_DIR}/ctr"
 cp "${CONTAINERD_SRC}/containerd-shim-runc-v2" "${CONTAINERD_BIN_DIR}/containerd-shim-runc-v2"
+cp "${CONTAINERD_SRC}/runc" "${CONTAINERD_BIN_DIR}/runc"
 chmod +x "${CONTAINERD_BIN_DIR}"/*
 
 # --- Persistent data directories ---

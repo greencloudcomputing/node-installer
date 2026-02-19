@@ -12,6 +12,7 @@ if [[ -f "${CONTAINERD_BIN_DIR}/containerd" ]]; then
   ln -sf "${CONTAINERD_BIN_DIR}/containerd" /usr/bin/containerd
   ln -sf "${CONTAINERD_BIN_DIR}/ctr" /usr/bin/ctr
   ln -sf "${CONTAINERD_BIN_DIR}/containerd-shim-runc-v2" /usr/bin/containerd-shim-runc-v2
+  ln -sf "${CONTAINERD_BIN_DIR}/runc" /usr/bin/runc
 else
   echo "[greencloud] ERROR: containerd binaries not found at ${CONTAINERD_BIN_DIR}"
   echo "[greencloud] Re-run install by unassigning and reassigning the app in UMS."

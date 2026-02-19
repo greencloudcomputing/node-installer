@@ -8,5 +8,15 @@
         "text": ""
       }
     ]
+  },
+  {
+    "url": "https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64",
+    "dest": "bin/runc",
+    "licenses": [
+      {
+        "name": "Apache-2.0",
+        "text": ""
+      }
+    ]
   }
 ]
