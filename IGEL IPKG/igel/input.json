@@ -12,6 +12,9 @@
     "source": "all/greencloud-config-sync.sh"
   },
   {
+    "source": "all/containerd-prestart.sh"
+  },
+  {
     "source": "all/etc/systemd/system/containerd.service"
   },
   {

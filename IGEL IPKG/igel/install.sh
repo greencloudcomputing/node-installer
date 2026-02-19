@@ -13,20 +13,22 @@ cp "${CONTAINERD_SRC}/containerd" "${CONTAINERD_BIN_DIR}/containerd"
 cp "${CONTAINERD_SRC}/ctr" "${CONTAINERD_BIN_DIR}/ctr"
 cp "${CONTAINERD_SRC}/containerd-shim-runc-v2" "${CONTAINERD_BIN_DIR}/containerd-shim-runc-v2"
 
-# --- Copy runc (downloaded as raw binary, not inside an archive) ---
+# --- Copy runc ---
 cp "${MOUNTPOINT}/runc.amd64" "${CONTAINERD_BIN_DIR}/runc" 2>/dev/null || \
 cp "/services/greencloud/runc.amd64" "${CONTAINERD_BIN_DIR}/runc"
 
 chmod +x "${CONTAINERD_BIN_DIR}"/*
 
-# --- Symlink binaries into /usr/bin ---
-ln -sf "${CONTAINERD_BIN_DIR}/containerd" /usr/bin/containerd
-ln -sf "${CONTAINERD_BIN_DIR}/ctr" /usr/bin/ctr
-ln -sf "${CONTAINERD_BIN_DIR}/containerd-shim-runc-v2" /usr/bin/containerd-shim-runc-v2
-ln -sf "${CONTAINERD_BIN_DIR}/runc" /usr/bin/runc
+# NOTE: We do NOT symlink into /usr/bin — it is on the read-only IGEL OS
+# partition and symlinks placed there do not survive reboots.
+# containerd.service sets Environment="PATH=..." to include /wfs/containerd/bin.
+
+# --- Wipe stale containerd data to avoid snapshotter conflicts ---
+# Any pre-existing data may reference overlayfs snapshots; start clean.
+rm -rf /wfs/containerd/data
+mkdir -p /wfs/containerd/data
 
 # --- Persistent data directories ---
-mkdir -p /wfs/containerd/data
 mkdir -p /var/lib/greencloud
 mkdir -p /services_rw/greencloud
 
@@ -36,10 +38,28 @@ if [[ -d /var/lib/containerd && ! -L /var/lib/containerd ]]; then
 fi
 ln -sf /wfs/containerd/data /var/lib/containerd
 
-# --- Generate containerd config with native snapshotter ---
+# --- Write containerd config explicitly (do not rely on sed of generated output) ---
+# Using native snapshotter avoids the need for overlayfs kernel support on IGEL OS.
 mkdir -p "${CONFIG_DIR}"
-/usr/bin/containerd config default > "${CONFIG_DIR}/config.toml"
-sed -i 's/snapshotter = "overlayfs"/snapshotter = "native"/g' "${CONFIG_DIR}/config.toml"
+cat > "${CONFIG_DIR}/config.toml" << 'EOF'
+version = 2
+
+[plugins]
+  [plugins."io.containerd.grpc.v1.cri"]
+    [plugins."io.containerd.grpc.v1.cri".containerd]
+      snapshotter = "native"
+      default_runtime_name = "runc"
+
+      [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+          runtime_type = "io.containerd.runc.v2"
+
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+            BinaryName = "/wfs/containerd/bin/runc"
+
+  [plugins."io.containerd.snapshotter.v1.native"]
+    root_path = "/wfs/containerd/data/io.containerd.snapshotter.v1.native"
+EOF
 
 # --- sysctl config ---
 echo "net.ipv4.ping_group_range = 0 2147483647" > /etc/sysctl.d/99-ping-group.conf

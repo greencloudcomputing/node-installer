@@ -1,5 +1,11 @@
 [
   {
+    "path": "/wfs/containerd/bin",
+    "owner": "0:0",
+    "permissions": "755",
+    "persistent": true
+  },
+  {
     "path": "/wfs/containerd/data",
     "owner": "0:0",
     "permissions": "755",

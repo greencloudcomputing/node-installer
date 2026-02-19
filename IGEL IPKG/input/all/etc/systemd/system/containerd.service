@@ -3,12 +3,17 @@ Description=containerd container runtime
 After=network.target
 
 [Service]
+# Run setup script before containerd starts.
+# This guarantees config.toml is written and shim is staged regardless
+# of whether post_mount.sh has run yet — solving the boot race condition.
+ExecStartPre=/services/greencloud/containerd-prestart.sh
 ExecStart=/wfs/containerd/bin/containerd
 Restart=always
 Delegate=yes
 KillMode=process
 OOMScoreAdjust=-999
 LimitNOFILE=1048576
+Environment="PATH=/run:/wfs/containerd/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 [Install]
 WantedBy=multi-user.target
