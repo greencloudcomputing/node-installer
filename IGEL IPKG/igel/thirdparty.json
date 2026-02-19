@@ -10,7 +10,7 @@
     ]
   },
   {
-    "url": "https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64",
+    "url": "https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64.tar.gz",
     "dest": "bin/runc",
     "licenses": [
       {

@@ -1,5 +1,1 @@
-{
-  "MULTISTAGE_STEP1": "download_thirdparty",
-  "MULTISTAGE_STEP2": "install_thirdparty",
-  "MULTISTAGE_STEP3": "run_install_script"
-}
+{}
