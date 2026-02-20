@@ -38,6 +38,15 @@ TOML
 ln -sf "${CONTAINERD_BIN_DIR}/containerd-shim-runc-v2" /run/containerd-shim-runc-v2
 ln -sf "${CONTAINERD_BIN_DIR}/runc" /run/runc
 
+cp /services/greencloud/bin/containerd /wfs/containerd/bin/containerd
+cp /services/greencloud/bin/ctr /wfs/containerd/bin/
+cp /services/greencloud/bin/containerd-shim-runc-v2 /wfs/containerd/bin/
+cp /services/greencloud/runc.amd64 /wfs/containerd/bin/runc
+chmod +x /wfs/containerd/bin/*
+ln -sf /wfs/containerd/bin/ctr /usr/bin/ctr
+ln -sf /wfs/containerd/bin/containerd-shim-runc-v2 /usr/bin/containerd-shim-runc-v2
+ln -sf /wfs/containerd/bin/runc /usr/bin/runc
+
 # --- Ensure data dir and symlink exist ---
 mkdir -p /wfs/containerd/data
 if [[ -d /var/lib/containerd && ! -L /var/lib/containerd ]]; then
@@ -51,10 +60,3 @@ if [[ -d "${OVERLAYFS_DIR}" ]]; then
   rm -rf "${OVERLAYFS_DIR}"
 fi
 
-cp /services/greencloud/bin/ctr /wfs/containerd/bin/
-cp /services/greencloud/bin/containerd-shim-runc-v2 /wfs/containerd/bin/
-cp /services/greencloud/runc.amd64 /wfs/containerd/bin/runc
-chmod +x /wfs/containerd/bin/*
-ln -sf /wfs/containerd/bin/ctr /usr/bin/ctr
-ln -sf /wfs/containerd/bin/containerd-shim-runc-v2 /usr/bin/containerd-shim-runc-v2
-ln -sf /wfs/containerd/bin/runc /usr/bin/runc

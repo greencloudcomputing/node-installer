@@ -4,6 +4,7 @@ After=network.target containerd.service
 Requires=containerd.service
 
 [Service]
+ExecStartPre=/bin/bash -c 'conf=/etc/sysctl.d/99-ping-group.conf; echo "net.ipv4.ping_group_range = 0 2147483647" > "$conf"; [[ -e /proc/sys/net/ipv4/ping_group_range ]] && echo "0 2147483647" > /proc/sys/net/ipv4/ping_group_range'
 ExecStart=/services/greencloud/usr/local/bin/gcnode
 Restart=always
 User=root
