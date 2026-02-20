@@ -123,6 +123,79 @@ systemctl enable --now gcnode
 
 ---
 
+## Registering a Node Manually
+
+If your node was not registered automatically during installation, you can register it manually using the `gccli` tool.
+
+### Step 1 — Log In
+
+Authenticate with your GreenCloud account using your API key:
+
+```bash
+gccli login
+```
+
+When prompted, enter your API key. You can find your API key in the GreenCloud dashboard under your account settings.
+
+---
+
+### Step 2 — Retrieve the Node ID
+
+Extract the Node ID from the service logs:
+
+```bash
+NODE_ID="$(journalctl -u gcnode --no-pager -n 200 | sed -n "s/.*ID → \([a-f0-9-]\+\).*/\1/p" | tail -1)"
+```
+
+This command reads the most recent Node ID from the gcnode logs and stores it in the `NODE_ID` variable. You can verify it was captured correctly by running:
+
+```bash
+echo $NODE_ID
+```
+
+You should see a UUID in the format `a1b2c3d4-e5f6-7890-abcd-ef1234567890`. If the output is empty, ensure the gcnode service is running and has fully started before retrying.
+
+---
+
+### Step 3 — Register the Node
+
+Run the following command to register the node, replacing `"My Node Description"` with a meaningful name or description for this node:
+
+```bash
+gccli node add --external --id "$NODE_ID" --description "My Node Description"
+```
+
+**Example:**
+```bash
+gccli node add --external --id "$NODE_ID" --description "EU-West Production Node 1"
+```
+
+Choose a description that helps you identify the node later — such as its location, purpose, or hostname.
+
+---
+
+### Full Registration Sequence
+
+Here is the complete process in order:
+
+```bash
+# 1. Log in with your API key
+gccli login
+
+# 2. Capture the Node ID from logs
+NODE_ID="$(journalctl -u gcnode --no-pager -n 200 | sed -n "s/.*ID → \([a-f0-9-]\+\).*/\1/p" | tail -1)"
+
+# 3. Confirm the Node ID was retrieved
+echo $NODE_ID
+
+# 4. Register the node
+gccli node add --external --id "$NODE_ID" --description "My Node Description"
+```
+
+Once registered, your node should appear in the GreenCloud dashboard.
+
+---
+
 ## Viewing Logs
 
 ### Standard Linux Systems (Using journalctl)
@@ -466,6 +539,15 @@ systemctl start gcnode
 | `systemctl is-enabled gcnode` | Check if auto-start is enabled |
 | `systemctl daemon-reload` | Reload systemd configuration |
 | `ls -lh /var/lib/greencloud/gcnode` | Verify binary exists |
+
+---
+
+### Node Registration Commands
+
+| Command | Description |
+|---------|-------------|
+| `gccli login` | Authenticate with your API key |
+| `gccli node add --external --id "$NODE_ID" --description "..."` | Register a node manually |
 
 ---
 
